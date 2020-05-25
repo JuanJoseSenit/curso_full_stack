@@ -1,0 +1,58 @@
+
+h1{
+    background-color: grey;
+    color: white;
+    padding: 10px 0 10px 20px;
+    border-radius: 8px;
+}
+
+.contenedorFlex{
+    display: flex;
+    height: 350px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-top: 100px;
+    
+}
+
+.todaLaImagen{
+    position: relative;
+    width: 200px;
+    
+}
+.divCubreImagen{
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    
+    
+}
+#imagenAhorcado{
+    position: absolute;
+     margin-top: 20px;
+}
+
+
+
+.pantalla{
+    display: flex;
+    align-items: center;
+}
+
+.textoPantalla{
+    padding: 10px;
+}
+.letrasUsadas{
+    font-size: 1.5em;
+}
+
+
+
+.pie{
+    margin-top: 8px;
+    background-color: grey;
+    color: white;
+    border-radius: 8px;
+    padding: 2px 0 2px 10px;
+}

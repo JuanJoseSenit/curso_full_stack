@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="animate.css">
+    
+</head>
+<body>
+    <header>
+        <h1>JUEGO DEL AHORCADO</h1>
+    </header>
+    <div class="juegoCompleto">
+        <div class="contenedorFlex">
+            <div class="pantalla">
+                <div>
+                    <div class="textoPantalla"><label for="introducirPalabra">Jugador 1, introduzca la palabra a adivinar</label></div>
+                    <div class="textoPantalla"><input type="password" id="introducirPalabra"></div>
+                    <div class="textoPantalla"><input type="button" id="boton_jugar" value="A JUGAR" onclick="jugar()"></div> 
+                </div>
+            </div>
+            <div class="todaLaImagen">
+                
+                <img src="imagenAhorcado.png" id="imagenAhorcado" class="imagenAhorcado" height="280px">
+                
+                <div class="divCubreImagen"></div>
+            </div>
+        </div>
+        <div class="letrasUsadas"></div>
+        <div id="lineas"></div>
+
+        <footer class="pie">
+            <p>Diseñado con <span>&hearts;</span> por Juanjo</p>
+        </footer>
+    </div>
+    
+    <script>
+       String.prototype.replaceAt = function(index, character) {
+                return this.substr(0, index) + character + this.substr(index+character.length);}
+
+        class Juego{
+            constructor(){
+                this.contador=0;
+                this.intentos=6;
+                this.palabraAdivinar="";
+                this.letraAdivinar="";
+                this.matrizLetrasUsadas=[];
+                this.cadenaLetras="";
+
+             };
+              
+
+            }
+
+        
+        elJuego=new Juego()
+        
+      
+//------------------------variables globales-------------------------
+        
+        
+        
+        
+        
+
+     
+        function jugar(){
+            //--------------jugador1 entroduce palabra------------------
+
+            var input=document.getElementById("introducirPalabra");
+            var botonPalabra=document.getElementById("boton_jugar");
+            if(input.value!==""){
+                input.setAttribute("disabled",true);
+                botonPalabra.setAttribute("disabled",true);
+            }
+            else{
+                alert("Recuerde que debe introducir una palabra");
+                return;
+            }
+
+            //--------------almaceno palabra en una variable-----------------
+
+            elJuego.palabraAdivinar= document.getElementById("introducirPalabra").value;
+            elJuego.palabraAdivinar=elJuego.palabraAdivinar.toUpperCase();
+            
+
+
+            //---------------creacion del mensaje de empezar------------------------
+
+            //var body=document.getElementsByTagName("body")[0];
+            var segundoDiv=document.getElementById("lineas");
+            var nuevoDiv=document.createElement("div");
+            segundoDiv.appendChild(nuevoDiv);
+            var texto=document.createTextNode("Hora de empezar a jugar");
+            nuevoDiv.appendChild(texto);
+
+            //------------dibujo lineas para las letras--------------------
+
+            var lineas=document.getElementById("lineas");
+            var cadena="";
+            for(var i=0;i<elJuego.palabraAdivinar.length;i++){
+                
+                cadena=cadena + "_ ";
+                
+            }
+            lineas.innerHTML=cadena ;
+
+            //-----------creacion del input de eleccion de letras-------------------
+            var formulario2=document.createElement("form");
+            segundoDiv.appendChild(formulario2);
+
+            var labelLetra=document.createElement("label");
+            labelLetra.setAttribute("for","letra");
+            var contLabel=document.createTextNode("Introduzca una letra");
+            formulario2.appendChild(labelLetra);
+            labelLetra.appendChild(contLabel);
+
+            var inputLetra=document.createElement("input");
+            inputLetra.setAttribute("id","letra");
+            inputLetra.setAttribute("placeholder","Introduzca una letra");
+            formulario2.appendChild(inputLetra);
+
+            var botonLetra=document.createElement("button");
+            botonLetra.setAttribute("type","button");
+            botonLetra.setAttribute("onclick","confirmar()");
+            
+            formulario2.appendChild(botonLetra);
+
+        }
+        //------------div con las palabras usadas y variables globales------------------------
+        
+        
+        
+        
+        
+        var divLetrasUsadas=document.getElementsByClassName("letrasUsadas")[0];
+        var parrafo=document.createElement("p");
+        var contenidoTexto=document.createTextNode("LETRAS USADAS");
+        parrafo.appendChild(contenidoTexto);
+        divLetrasUsadas.appendChild(parrafo);
+        var letrasUsadas=document.createElement("div");
+        divLetrasUsadas.appendChild(letrasUsadas);
+        
+        
+        var divMensajes=document.createElement("div");
+        divLetrasUsadas.appendChild(divMensajes);
+        divMensajes.appendChild(document.createTextNode("INFO"));
+        var divMensajes2=document.createElement("div");
+        divLetrasUsadas.appendChild(divMensajes2);
+
+        var divTapaImagen=document.getElementsByClassName("divCubreImagen")[0];
+        
+        
+        
+        function confirmar(){
+
+                
+                elJuego.letraAdivinar= document.getElementById("letra").value;
+                elJuego.letraAdivinar=elJuego.letraAdivinar.toUpperCase();
+                if(elJuego.letraAdivinar.length!=1){
+                    divMensajes2.innerHTML="INSERTE UNA LETRA";
+                    return;
+                }
+                if(elJuego.matrizLetrasUsadas.includes(elJuego.letraAdivinar) ===false){
+                    elJuego.matrizLetrasUsadas.push(elJuego.letraAdivinar);
+
+                }
+                else{
+                    divMensajes2.innerHTML="Ya ha usado esa letra";
+                    return;
+                }
+                //---------------pinta las letras usadas--------------------------
+                elJuego.cadenaLetras="";
+                for ( var i = 0; i< elJuego.matrizLetrasUsadas.length; i++){
+
+                    elJuego.cadenaLetras =elJuego.cadenaLetras + elJuego.matrizLetrasUsadas[i] + " ";
+                }
+                letrasUsadas.innerHTML=elJuego.cadenaLetras;
+
+                //---------------reemplaza guiones por letras--------------------
+            
+                for(var j=0;j<elJuego.palabraAdivinar.length;j++){
+                    if(elJuego.palabraAdivinar[j]===elJuego.letraAdivinar){
+                        lineas.innerHTML=lineas.innerHTML.replaceAt(j*2,elJuego.letraAdivinar);
+                        elJuego.contador=elJuego.contador+1  //Cuando el contador llegue a la longitud de la palabra es que ha adivinado 
+                                             //la palabra
+                        
+                    }
+                }
+                if(elJuego.palabraAdivinar.indexOf(elJuego.letraAdivinar)==-1){
+                    elJuego.intentos=elJuego.intentos-1;
+
+                    divMensajes2.innerHTML="Ups... Le quedan "+elJuego.intentos+ " intentos";
+                    if(elJuego.intentos===5){
+                        divTapaImagen.style.height="80%";
+                    }
+                    else if(elJuego.intentos===4){
+                        divTapaImagen.style.height="65%";
+                    }
+                    else if(elJuego.intentos===3){
+                        divTapaImagen.style.height="50%";
+                    }
+                    else if(elJuego.intentos===2){
+                        divTapaImagen.style.height="35%";
+                    }
+                    else if(elJuego.intentos===1){
+                        var imagenLatir=document.getElementsByClassName("imagenAhorcado")[0];
+                        imagenLatir.setAttribute("class","animated infinite pulse delay-2s");
+                        divTapaImagen.style.height="20%";
+                        
+                    }
+                    
+                }
+                
+                if(elJuego.palabraAdivinar.length===contador){
+                    divMensajes2.innerHTML="Enhorabuena!!";
+                    
+                }
+                if(elJuego.intentos===0){
+                    divMensajes2.innerHTML="Lo siento. Ha perdido. La palabra buscada era "+ elJuego.palabraAdivinar;
+                    divTapaImagen.style.height="0%";
+                    
+                    
+                }
+            }
+        
+    
+    </script>
+    
+</body>
+</html>
