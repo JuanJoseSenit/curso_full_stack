@@ -1,0 +1,156 @@
+1. Obtener todos los documentos
+
+> db.movies.find({},{_id:0})
+{ "title" : "Fight Club", "writer" : "Chuck Palahniuk", "year" : 1999, "actors" : [ "Brad Pitt", "Edward Norton" ] }
+{ "title" : "Pulp Fiction", "writer" : "Quentin Tarantino", "year" : 1994, "actors" : [ "John Travolta", "Uma Thurman" ] }
+{ "title" : "Inglorious Basterds", "writer" : "Quentin Tarantino", "year" : 2009, "actors" : [ "Brad Pitt", "Diane Kruger", "Eli Roth" ] }
+{ "title" : "The Hobbit:An Unexpected Jorney", "writer" : "J.R.R.Tolkien", "year" : 2012, "franchise" : "The Hobbit" }
+{ "title" : "The Hobbit:The Desolation of Smaug", "writer" : "J.R.R.Tolkien", "year" : 2013, "franchise" : "The Hobbit" }
+{ "title" : "The Hobbit:The Battle of the Five Armies", "writer" : "J.R.R.Tolkien", "year" : 2013, "franchise" : "The Hobbit", "synopsis" : "Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darknees" }
+{ "title" : "Pee Wee Herman's Big Adventure" }
+{ "title" : "Avatar" }
+
+2. Obtener documentos con writer igual a "Quentin Tarantino"
+
+> db.movies.find({writer:"Quentin Tarantino"},{_id:0})
+{ "title" : "Pulp Fiction", "writer" : "Quentin Tarantino", "year" : 1994, "actors" : [ "John Travolta", "Uma Thurman" ] }
+{ "title" : "Inglorious Basterds", "writer" : "Quentin Tarantino", "year" : 2009, "actors" : [ "Brad Pitt", "Diane Kruger", "Eli Roth" ] }
+
+
+3. Obtener documentos con actors que incluyan a "Brad Pitt"
+
+> db.movies.find({actors:"Brad Pitt"},{_id:0})
+{ "title" : "Fight Club", "writer" : "Chuck Palahniuk", "year" : 1999, "actors" : [ "Brad Pitt", "Edward Norton" ] }
+{ "title" : "Inglorious Basterds", "writer" : "Quentin Tarantino", "year" : 2009, "actors" : [ "Brad Pitt", "Diane Kruger", "Eli Roth" ] }
+
+4. Obtener documentos con franchise igual a "The Hobbit"
+
+> db.movies.find({franchise:"The Hobbit"},{_id:0})
+{ "title" : "The Hobbit:An Unexpected Jorney", "writer" : "J.R.R.Tolkien", "year" : 2012, "franchise" : "The Hobbit" }
+{ "title" : "The Hobbit:The Desolation of Smaug", "writer" : "J.R.R.Tolkien", "year" : 2013, "franchise" : "The Hobbit" }
+{ "title" : "The Hobbit:The Battle of the Five Armies", "writer" : "J.R.R.Tolkien", "year" : 2013, "franchise" : "The Hobbit", "synopsis" : "Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darknees" }
+
+5. Obtener todas las películas de los 90s.
+
+> db.movies.find({year:{$gte:1990,$lte:1999}},{_id:0}).sort({year:1}).pretty()
+{
+	"title" : "Pulp Fiction",
+	"writer" : "Quentin Tarantino",
+	"year" : 1994,
+	"actors" : [
+		"John Travolta",
+		"Uma Thurman"
+	]
+}
+{
+	"title" : "Fight Club",
+	"writer" : "Chuck Palahniuk",
+	"year" : 1999,
+	"actors" : [
+		"Brad Pitt",
+		"Edward Norton"
+	]
+
+6. Obtener las películas estrenadas entre el año 2000 y 2010.
+
+> db.movies.find({year:{$gte:2000,$lte:2010}},{_id:0}).sort({year:1}).pretty()
+{
+	"title" : "Inglorious Basterds",
+	"writer" : "Quentin Tarantino",
+	"year" : 2009,
+	"actors" : [
+		"Brad Pitt",
+		"Diane Kruger",
+		"Eli Roth"
+	]
+}
+
+Actualizar Documentos
+----------------------
+
+1. Agregar sinopsis a "The Hobbit: An Unexpected Journey" : "A reluctant hobbit, Bilbo
+Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim
+their mountain home - and the gold within it - from the dragon Smaug."
+
+> db.movies.updateOne({title:"The Hobbit:An Unexpected Jorney"},{$set:{synopsis:"A reluctant hobbit, Bilbo"}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim
+2020-02-21T12:45:58.539+0100 E QUERY    [thread1] SyntaxError: missing ; before statement @(shell):1:14
+> db.movies.updateOne({title:"The Hobbit:An Unexpected Jorney"},{$set:{synopsis:"A reluctant hobbit..."}}
+... )
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.movies.find({title:"The Hobbit:An Unexpected Jorney"},{_id:0})
+{ "title" : "The Hobbit:An Unexpected Jorney", "writer" : "J.R.R.Tolkien", "year" : 2012, "franchise" : "The Hobbit", "synopsis" : "A reluctant hobbit..." }
+> db.movies.find({title:"The Hobbit:An Unexpected Jorney"},{_id:0}).pretty()
+{
+	"title" : "The Hobbit:An Unexpected Jorney",
+	"writer" : "J.R.R.Tolkien",
+	"year" : 2012,
+	"franchise" : "The Hobbit",
+	"synopsis" : "A reluctant hobbit..."
+}
+
+
+2. Agregar sinopsis a "The Hobbit: The Desolation of Smaug" : "The dwarves, along with
+Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor, their
+homeland, from Smaug. Bilbo Baggins is in possession of a mysterious and magical
+ring."
+
+> db.movies.updateOne({title:"The Hobbit:The Desolation of Smaug"},{$set:{synopsis:"The dwarver, along..."}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.movies.find({title:"The Hobbit:The Desolation of Smaug"},{_id:0}).pretty()
+{
+	"title" : "The Hobbit:The Desolation of Smaug",
+	"writer" : "J.R.R.Tolkien",
+	"year" : 2013,
+	"franchise" : "The Hobbit",
+	"synopsis" : "The dwarver, along..."
+}
+
+
+3. Agregar una actor llamado "Samuel L. Jackson" a la película "Pulp Fiction"
+> db.movies.updateOne({title:"Pulp Fiction"},{$addToSet:{actors:"Samuel L. Jackson"}})
+
+
+
+Búsqueda por Texto / Text Search
+--------------------------------
+
+1. Encontrar las películas que en el título contengan la palabra "Hobbit"
+> db.movies.find({title:/Hobbit/},{_id:0}).pretty()
+{
+	"title" : "The Hobbit:An Unexpected Jorney",
+	"writer" : "J.R.R.Tolkien",
+	"year" : 2012,
+	"franchise" : "The Hobbit",
+	"synopsis" : "A reluctant hobbit..."
+}
+{
+	"title" : "The Hobbit:The Desolation of Smaug",
+	"writer" : "J.R.R.Tolkien",
+	"year" : 2013,
+	"franchise" : "The Hobbit",
+	"synopsis" : "The dwarver, along..."
+}
+{
+	"title" : "The Hobbit:The Battle of the Five Armies",
+	"writer" : "J.R.R.Tolkien",
+	"year" : 2013,
+	"franchise" : "The Hobbit",
+	"synopsis" : "Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darknees"
+}
+
+2. Encontrar las películas que en la sinopsis contengan la palabra "Gandalf"
+> db.movies.find({synopsis:/Gandalf/},{_id:0}).pretty()
+
+3. Encontrar las películas que en la sinopsis contengan la palabra "Bilbo" y no la palabra
+"Gandalf"
+
+db.movies.find($and:[{synopsis:/Bilbo/},{synopsis:{$not:/Gandalf/}}])
+
+
+4. Encontrar las películas que en la sinopsis contengan la palabra "dwarves" ó "hobbit"
+5. Encontrar las películas que en la sinopsis contengan la palabra "gold" y "dragon"
+
+
+

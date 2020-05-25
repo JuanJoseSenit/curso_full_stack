@@ -1,0 +1,57 @@
+
+2.
+
+> db.ciudades.find({},{_id:0}).sort({ciudad:1}).limit(3)
+{ "ciudad" : "Barcelona", "habitantes" : 1620943 }
+{ "ciudad" : "Madrid", "habitantes" : 3233527, "capital" : "si" }
+{ "ciudad" : "Sevilla", "habitantes" : 702355 }
+
+3.
+
+> db.ciudades.find({},{_id:0}).sort({habitantes:-1})
+{ "ciudad" : "Madrid", "habitantes" : 3233527, "capital" : "si" }
+{ "ciudad" : "Barcelona", "habitantes" : 1620943 }
+{ "ciudad" : "Valencia", "habitantes" : 797028 }
+{ "ciudad" : "Sevilla", "habitantes" : 702355 }
+{ "ciudad" : "Zaragoza", "habitantes" : 679624 }
+
+4.
+> db.ciudades.find({ciudad:/^M/},{_id:0,ciudad:1})
+{ "ciudad" : "Madrid" }
+5.
+
+{ "_id" : ObjectId("5e4f9a95c5e7a0e729c3a7a5"), "ciudad" : "Barcelona", "habitantes" : 1620943 }
+{ "_id" : ObjectId("5e4f9a57c5e7a0e729c3a7a4"), "ciudad" : "Madrid", "habitantes" : 3233527, "capital" : "si" }
+{ "_id" : ObjectId("5e4f9ac8c5e7a0e729c3a7a7"), "ciudad" : "Sevilla", "habitantes" : 702355 }
+{ "_id" : ObjectId("5e4f9ab0c5e7a0e729c3a7a6"), "ciudad" : "Valencia", "habitantes" : 797028 }
+{ "_id" : ObjectId("5e4f9ae0c5e7a0e729c3a7a8"), "ciudad" : "Zaragoza", "habitantes" : 679624 }
+
+6.
+
+> db.ciudades.find({capital:"si"},{_id:0,ciudad:1})
+{ "ciudad" : "Madrid" }
+
+7.
+> db.ciudades.find({habitantes:{$gte:1000000}},{_id:0})
+{ "ciudad" : "Madrid", "habitantes" : 3233527, "capital" : "si" }
+{ "ciudad" : "Barcelona", "habitantes" : 1620943 }
+
+8.
+Te muestra de ciudades tanto el nombre de la ciudad, como habitantes y caapital de los que hay ahi.
+
+9.
+> db.ciudades.find().count()
+5
+
+10.
+> db.ciudades.find({$or:[{ciudad:/^B/},{ciudad:/z$/}]}).pretty()
+{
+	"_id" : ObjectId("5e4f9a95c5e7a0e729c3a7a5"),
+	"ciudad" : "Barcelona",
+	"habitantes" : 1620943
+}
+
+
+
+
+

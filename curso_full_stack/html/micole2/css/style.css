@@ -1,0 +1,191 @@
+*{
+
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*Barra de navegacion*/
+
+nav{
+    background-color: #0082e6;
+    height: 80px;
+    width: 100%;
+}
+
+.logo{
+
+    color:white;
+    font-size: 35px;
+    line-height: 80px;
+    padding: 0 100px;
+    font-weight: bold;
+}
+
+.logo a{
+    color: white;
+    text-decoration: none;
+}
+
+nav ul{
+    float: right;
+}
+
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+
+nav ul li a{
+    color: white;
+    font-size: 17px;
+    padding: 7px 13px;
+}
+
+nav ul li a:hover{
+    background: #1b9bff;
+    transition: 0.5s;
+    color: white;
+}
+
+/*Footer*/
+
+footer{
+    background: #0082e6;
+    text-align: center;
+    height: 50px;
+    padding: 10px;
+    color: white;
+}
+
+/*Primera seccion Jumbotron*/
+
+.jumbotron{
+
+    background-image: url("/assets/img/colegio.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    display: flex;  /*Hace que el contenedor sea flexible*/
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.moto{
+    padding: 25px;
+    text-align: center;
+    font-size: 80px;
+    width: 80%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.65);
+    border-radius: 8px;
+}
+
+/*Bloque gris y blanco del content*/
+.content{
+    text-align: center;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.content article{
+    width: 100%;
+    pad: 50px 20px 50px 20px;
+
+}
+
+.art-white{
+    background-color: white;
+}
+
+.art-grey{
+    background-color: grey;
+}
+
+h1{
+    text-align: center;
+    padding: 0 0 50px 0;
+}
+figure{
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    padding: 0 0 50px 0;
+}
+.img-responsive{
+    max-width: 100%;
+    height: 100%;
+    
+}
+
+
+.checkbtn{
+    font-size: 30px;
+    color:white;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+#check{
+    display: none;
+}
+
+@media (max-width:1200px){
+    .logo{
+        font-size: 30px;
+        padding-left: 50px;
+    }
+    .moto{
+        font-size: 30px;
+    }
+    .author{
+        font-size: 25px;
+    }
+    .checkbtn{
+        display: block;
+    }
+    ul{
+        position: absolute;
+        top: 80px;
+        width: 100%;
+        height: 100vh;
+        left: -100%;
+        background: steelblue;
+        text-align: center;
+        transition: all 0.5s;
+    }
+    nav ul{
+        overflow: scroll;
+    }
+    nav ul li{
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+    }
+    nav ul li a{
+        font-size: 20px;
+    }
+    nav ul li a:hover{
+        background: none;
+        color: blue;
+        font-weight: bolder;
+    }
+    #check:checked ~ ul{
+        left: 0;
+    }
+}

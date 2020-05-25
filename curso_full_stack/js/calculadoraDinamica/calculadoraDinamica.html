@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+    var body=document.getElementsByTagName("body")[0];
+    var titulo=document.createElement("h1");
+    body.appendChild(titulo);
+    //var contenido=document.createTextNode("CALCULADORA GENERADA DINÁMICAMENTE");
+    titulo.appendChild(document.createTextNode("CALCULADORA GENERADA DINÁMICAMENTE"));
+    titulo.setAttribute("class","titulo");
+    
+    //---------creación pantalla---------------
+    var divPantalla=document.createElement("div");
+    body.appendChild(divPantalla);
+
+    var pantalla=document.createElement("input");
+    divPantalla.appendChild(pantalla);
+    pantalla.setAttribute("type","text");
+    pantalla.setAttribute("class","pantalla");
+    
+
+    //----------creación botones del 1-9---------------------
+
+    var tabla=document.createElement("table");
+    
+   
+    body.appendChild(tabla);
+    var tr4=document.createElement("tr");
+    var tr1=document.createElement("tr");
+    var tr2=document.createElement("tr");
+    var tr3=document.createElement("tr");
+    var tr0=document.createElement("tr");
+    
+    tabla.appendChild(tr3);
+    tabla.appendChild(tr2);
+    tabla.appendChild(tr1);
+    tabla.appendChild(tr0);
+    
+    var td;
+    var boton;
+    
+    for(var i=0;i<=9;i++){
+        td=document.createElement("td");
+        td.setAttribute("class","botonNum");
+        boton=document.createElement("input");
+        boton.setAttribute("type","button");
+        boton.setAttribute("data-numero",i); 
+        boton.setAttribute("class","tamBoton");
+        boton.value=i;
+        if(i===0){
+            tr0.appendChild(td);
+            td.appendChild(boton);
+
+        }
+
+       if(i>0 && i<4){
+            tr1.appendChild(td);
+            td.appendChild(boton);}
+        if(i>=4 && i<7){
+            tr2.appendChild(td);
+             td.appendChild(boton);}
+        if(i>=7){
+            tr3.appendChild(td);
+            td.appendChild(boton);} 
+        }
+    
+
+    var tr5=document.createElement("tr");
+    var tr6=document.createElement("tr");
+    var tr7=document.createElement("tr");
+    tabla.appendChild(tr5);
+    tabla.appendChild(tr6);
+    tabla.appendChild(tr7);
+    var matrizOperandos=["+","-","*","/","(",")",".","del","c","="];
+    for(var r=0;r<matrizOperandos.length;r++){
+        td=document.createElement("td");
+        td.setAttribute("class","botonNum");
+        boton=document.createElement("input");
+        boton.setAttribute("type","button");
+        boton.setAttribute("data-numero",matrizOperandos[r]);
+        boton.setAttribute("class","tamBoton");  
+        boton.value=matrizOperandos[r];
+        if(r<3){
+        tr5.appendChild(td);
+        td.appendChild(boton);}
+        if(r>=3 && r<6){
+            tr6.appendChild(td);
+            td.appendChild(boton);
+        }
+        if(r>=6 && r<matrizOperandos.length){
+            tr7.appendChild(td);
+            td.appendChild(boton);
+        }
+ 
+    }
+    //-----------------pie de pagina---------------------
+    var footer=document.createElement("footer");
+    body.appendChild(footer);
+    footer.appendChild(document.createTextNode("Diseñado por Juanjo"));
+    
+  
+    //----------botones a la espera--------------------
+    var matrizBotones=document.getElementsByTagName("input");
+    for(var j=0;j<matrizBotones.length;j++){
+        matrizBotones[j].addEventListener("click",marcarNumeros);
+    }
+    //---------funcion marcar numeros--------------------
+    function marcarNumeros(e){
+        
+        var mensajePantalla=e.target.dataset.numero;
+        if(mensajePantalla!=="=" && mensajePantalla!=="c"&& mensajePantalla!=="del"){
+            pantalla.value=pantalla.value+mensajePantalla;
+        }
+        else if(mensajePantalla==="c"){
+            pantalla.value="";
+        }
+        else if(mensajePantalla==="del"){
+            pantalla.value=pantalla.value.slice(0,(pantalla.value.length)-1);
+
+        }
+
+        else{
+            var resultado=eval(pantalla.value);
+            pantalla.value=resultado;
+        }
+        
+    }
+    
+    </script>
+    
+</body>
+</html>

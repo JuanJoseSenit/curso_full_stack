@@ -1,0 +1,105 @@
+1
+
+mysql> select apellidos from empleados;
++-------------------+
+| apellidos         |
++-------------------+
+| Santos_Garcia     |
+| Fernandez_Aguado  |
+| Anton_Martinez    |
+| Senit_Velasco     |
+| Fernandez_Sanchez |
+| Sanz_Velasco      |
++-------------------+
+6 rows in set (0.00 sec)
+
+2
+
+mysql> select distinct(apellidos) from empleados;
++-------------------+
+| apellidos         |
++-------------------+
+| Senit_Velasco     |
+| Santos_Garcia     |
+| Fernandez_Aguado  |
+| Anton_Martinez    |
+| Fernandez_Sanchez |
+| Sanz_Velasco      |
++-------------------+
+
+3  (en este punto la tabla empleados tiene un campo más que he añadido después)
+
+mysql> select * from empleados where apellidos="Senit_Velasco";
++----------+--------+---------------+--------------+
+| DNI      | nombre | apellidos     | departamento |
++----------+--------+---------------+--------------+
+| 51211232 | Javier | Senit_Velasco |            2 |
+| 51744192 | Juanjo | Senit_Velasco |            2 |
++----------+--------+---------------+--------------+
+2 rows in set (0.00 sec)
+
+4
+
+mysql> select * from empleados where apellidos="Senit_Velasco" or apellidos="Santos_Garcia";
++----------+--------+---------------+--------------+
+| DNI      | nombre | apellidos     | departamento |
++----------+--------+---------------+--------------+
+| 51211232 | Javier | Senit_Velasco |            2 |
+| 51222134 | Julian | Santos_Garcia |            1 |
+| 51744192 | Juanjo | Senit_Velasco |            2 |
++----------+--------+---------------+--------------+
+
+5
+
+mysql> select * from empleados where departamento=1;
++----------+--------+---------------+--------------+
+| DNI      | nombre | apellidos     | departamento |
++----------+--------+---------------+--------------+
+| 51222134 | Julian | Santos_Garcia |            1 |
+| 5310067  | Marta  | Sanz_Velasco  |            1 |
++----------+--------+---------------+--------------+
+2 rows in set (0.00 sec)
+
+6
+
+mysql> select * from empleados where departamento=2 or departamento=3;
++----------+-----------+-------------------+--------------+
+| DNI      | nombre    | apellidos         | departamento |
++----------+-----------+-------------------+--------------+
+| 51211232 | Javier    | Senit_Velasco     |            2 |
+| 51722412 | Marisa    | Fernandez_Aguado  |            2 |
+| 51744192 | Juanjo    | Senit_Velasco     |            2 |
+| 51722452 | Cristobal | Anton_Martinez    |            3 |
+| 52055234 | Marta     | Fernandez_Sanchez |            3 |
++----------+-----------+-------------------+--------------+
+5 rows in set (0.00 sec)
+
+7 ninguno empieza por P
+
+mysql> select * from empleados where apellidos like "P%";
+Empty set (0.00 sec)
+
+voy a hacer la búsqueda por la F, que sí que tengo
+mysql> select * from empleados where apellidos like "F%";
++----------+--------+-------------------+--------------+
+| DNI      | nombre | apellidos         | departamento |
++----------+--------+-------------------+--------------+
+| 51722412 | Marisa | Fernandez_Aguado  |            2 |
+| 52055234 | Marta  | Fernandez_Sanchez |            3 |
++----------+--------+-------------------+--------------+
+2 rows in set (0.00 sec)
+
+8
+
+mysql> select sum(presupuesto) from departamentos;
++------------------+
+| sum(presupuesto) |
++------------------+
+|           150000 |
++------------------+
+1 row in set (0.01 sec)
+
+
+
+
+

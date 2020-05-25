@@ -1,0 +1,76 @@
+
+1.
+
+db.pokemon.insertOne({id:806,num:806,name:"Blacephalon",img:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/806.png",type:["Fire","Ghost"],height:"1,8 m",egg:"Not in Eggs",weight:"13 kg",weaknesses:["Water","Ghost","Ground","Dark","Rock"]})
+
+2.
+db.pokemon.insertOne({id:790,num:790,name:"Cosmoem",img:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/790.png",type:["Psychic"],height:"0.011 m",egg:"Not in Eggs",weight:"999 kg",weaknesses:["Dark","Ghost","Bug"],"pre_evolution":[{num:789,name:"Cosmog"}],"next_evolution":[{num:791,name:"Solgaleo"},{num:792,name:"Lunala"}]})
+
+
+
+db.pokemon.insertOne({id:791,num:791,name:"Solgaleo",img:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/791.png",type:["Psychic","Steel"],height:"3.4 m",egg:"Not in Eggs",weight:"230 kg",weaknesses:["Dark","Ghost","Fire","Ground"],"pre_evolution":[{num:790,name:"Cosmoem"}]})
+
+3.
+LO BUSCO
+db.pokemon.find({_id:ObjectId("58f56171ee9d4bd5e610d693")}).pretty()
+{
+	"_id" : ObjectId("58f56171ee9d4bd5e610d693"),
+	"id" : 80,
+	"num" : "080",
+	"name" : "Slowbro",
+	"img" : "http://www.serebii.net/pokemongo/pokemon/080.png",
+	"type" : [
+		"Water",
+		"Psychic"
+	],
+	"height" : "1.60 m",
+	"weight" : "78.5 kg",
+	"candy" : "Slowpoke Candy",
+	"egg" : "Not in Eggs",
+	"spawn_chance" : 0.036,
+	"avg_spawns" : 3.6,
+	"spawn_time" : "02:56",
+	"multipliers" : null,
+	"weaknesses" : [
+		"Electric",
+		"Grass",
+		"Bug",
+		"Ghost",
+		"Dark"
+	],
+	"prev_evolution" : [
+		{
+			"num" : "079",
+			"name" : "Slowpoke"
+		}
+	]
+}
+Y LO BORRO PARA SABER CUAL ES
+db.pokemon.deleteOne({_id:ObjectId("58f56171ee9d4bd5e610d693")})
+
+4.
+db.pokemon.deleteOne({height:"1.6 m"})
+
+5.
+db.pokemon.updateMany({"avg_spawns":{$lt:3.5}},{$set:{"avg_spawns":3.5}})
+
+6.
+db.pokemon.replaceOne({name:"Pikachu"},{id:25,num:025,nombre:"Pikachu", img:"http://www.serebii.net/pokemongo/pokemon/025.png",tipo:["Electric"],altura:"0.41 m",peso:"6.0 kg",caramelo:"Pikachu Candy","contar_caramelos":50,huevo:"2 km",debilidades:["Ground"],evolución:[{num:"026",nombre:"Raichu"}]})
+
+7.
+db.pokemon.update({multipliers:null},{$unset:{multipliers:null}})
+
+8.
+db.pokemon.distinct("weaknesses")
+
+9.
+db.pokemon.find({},{name:1,_id:0,height:1}).sort({height:-1}).limit(3)
+
+10.
+db.pokemon.find({},{name:1,_id:0,weight:1}).sort({weight:1})
+
+11.
+db.pokemon.updateMany({type:"Water"},{$addToSet:{weaknesses:"Fire"}})
+
+
+

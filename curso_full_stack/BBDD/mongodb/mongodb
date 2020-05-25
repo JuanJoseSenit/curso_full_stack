@@ -1,0 +1,346 @@
+4.
+
+> db.alumnos.find().pretty()
+{
+	"_id" : ObjectId("5e4cfa72da4af15292f3c86a"),
+	"nombre" : "Pepe",
+	"apellido" : "Sánchez",
+	"edad" : 29,
+	"email" : "pp@soypepe.com",
+	"ciudad" : "Madrid"
+}
+{
+	"_id" : ObjectId("5e4cfad6da4af15292f3c86b"),
+	"nombre" : "María",
+	"apellido" : "Pérez",
+	"edad" : 45,
+	"email" : "lamary@hotmail.com",
+	"estudios" : "Peluquería"
+}
+{
+	"_id" : ObjectId("5e4cfb1ada4af15292f3c86c"),
+	"nombre" : "María",
+	"apellido" : "Santos",
+	"edad" : 25,
+	"email" : "maria_s@hotmail.com",
+	"estudios" : "Veterinaria"
+}
+{
+	"_id" : ObjectId("5e4cfb64da4af15292f3c86d"),
+	"nombre" : "Sonia",
+	"apellido" : "Martos",
+	"edad" : 25,
+	"email" : "soniam@hotmail.com"
+}
+{
+	"_id" : ObjectId("5e4cfbcfda4af15292f3c86e"),
+	"nombre" : "Pepe",
+	"apellido" : "Jiménez",
+	"edad" : 32,
+	"email" : "pepito@hotmail.com",
+	"ciudad" : "Barcelona"
+}
+{
+	"_id" : ObjectId("5e4cfc37da4af15292f3c86f"),
+	"nombre" : "Lorena",
+	"apellido" : "Torre",
+	"edad" : 28,
+	"email" : "lorenitavk@hotmail.com",
+	"ciudad" : "Madrid"
+}
+{
+	"_id" : ObjectId("5e4cfc8dda4af15292f3c870"),
+	"nombre" : "María",
+	"apellido" : "Jiménez",
+	"edad" : 70,
+	"email" : "principeodentista@hotmail.com",
+	"ciudad" : "Sevilla",
+	"estudios" : "música"
+}
+{
+	"_id" : ObjectId("5e4cfcd0da4af15292f3c871"),
+	"nombre" : "Javier",
+	"apellido" : "Senit",
+	"edad" : 70,
+	"email" : "javier@hotmail.com",
+	"ciudad" : "Madrid",
+	"estudios" : "informática"
+}
+
+5.
+
+> db.alumnos.find({nombre:"Pepe"}).pretty()
+{
+	"_id" : ObjectId("5e4cfa72da4af15292f3c86a"),
+	"nombre" : "Pepe",
+	"apellido" : "Sánchez",
+	"edad" : 29,
+	"email" : "pp@soypepe.com",
+	"ciudad" : "Madrid"
+}
+{
+	"_id" : ObjectId("5e4cfbcfda4af15292f3c86e"),
+	"nombre" : "Pepe",
+	"apellido" : "Jiménez",
+	"edad" : 32,
+	"email" : "pepito@hotmail.com",
+	"ciudad" : "Barcelona"
+}
+
+6.
+
+> db.alumnos.find({edad:20}).pretty()
+{
+	"_id" : ObjectId("5e4cfe5bda4af15292f3c872"),
+	"nombre" : "María",
+	"apellido" : "Luz",
+	"edad" : 20,
+	"email" : "m.luz@hotmail.com",
+	"estudios" : "Medicina"
+}
+
+7.
+
+> db.alumnos.find({nombre:"María"},{apellido:1, _id:0})
+{ "apellido" : "Pérez" }
+{ "apellido" : "Santos" }
+{ "apellido" : "Jiménez" }
+{ "apellido" : "Luz" }
+> 
+
+8.
+
+> db.alumnos.find().count()
+9
+
+
+9.
+> db.alumnos.find({nombre:"Pepe"}).count()
+2
+
+
+10.
+
+> db.alumnos.find({email:"pp@soypepe.com"},{apellido:1,_id:0})
+{ "apellido" : "Sánchez" }
+
+
+
+-------------ejercicio nuevo-------------------------
+1.
+> db.alumnos.distinct("nombre")
+[ "Pepe", "María", "Sonia", "Lorena", "Javier" ]
+
+2.
+
+//mostraría los correos distintos
+> db.alumnos.distinct("email")
+[
+	"pp@soypepe.com",
+	"lamary@hotmail.com",
+	"maria_s@hotmail.com",
+	"soniam@hotmail.com",
+	"pepito@hotmail.com",
+	"lorenitavk@hotmail.com",
+	"principeodentista@hotmail.com",
+	"javier@hotmail.com",
+	"m.luz@hotmail.com"
+]
+
+//mostraria todos
+> db.alumnos.find({},{_id:0,email:1})
+{ "email" : "pp@soypepe.com" }
+{ "email" : "lamary@hotmail.com" }
+{ "email" : "maria_s@hotmail.com" }
+{ "email" : "soniam@hotmail.com" }
+{ "email" : "pepito@hotmail.com" }
+{ "email" : "lorenitavk@hotmail.com" }
+{ "email" : "principeodentista@hotmail.com" }
+{ "email" : "javier@hotmail.com" }
+{ "email" : "m.luz@hotmail.com" }
+
+3.
+> db.alumnos.find().count()
+9
+
+> db.alumnos.find().limit(3).pretty()
+{
+	"_id" : ObjectId("5e4cfa72da4af15292f3c86a"),
+	"nombre" : "Pepe",
+	"apellido" : "Sánchez",
+	"edad" : 29,
+	"email" : "pp@soypepe.com",
+	"ciudad" : "Madrid"
+}
+{
+	"_id" : ObjectId("5e4cfad6da4af15292f3c86b"),
+	"nombre" : "María",
+	"apellido" : "Pérez",
+	"edad" : 45,
+	"email" : "lamary@hotmail.com",
+	"estudios" : "Peluquería",
+	"estado civil" : "soltera"
+}
+{
+	"_id" : ObjectId("5e4cfb1ada4af15292f3c86c"),
+	"nombre" : "María",
+	"apellido" : "Santos",
+	"edad" : 25,
+	"email" : "maria_s@hotmail.com",
+	"estudios" : "Veterinaria",
+	"estado civil" : "soltera"
+}
+
+> db.alumnos.find().skip(db.alumnos.count()-5).pretty()
+{
+	"_id" : ObjectId("5e4cfbcfda4af15292f3c86e"),
+	"nombre" : "Pepe",
+	"apellido" : "Jiménez",
+	"edad" : 32,
+	"email" : "pepito@hotmail.com",
+	"ciudad" : "Barcelona"
+}
+{
+	"_id" : ObjectId("5e4cfc37da4af15292f3c86f"),
+	"nombre" : "Lorena",
+	"apellido" : "Torre",
+	"edad" : 28,
+	"email" : "lorenitavk@hotmail.com",
+	"ciudad" : "Madrid"
+}
+{
+	"_id" : ObjectId("5e4cfc8dda4af15292f3c870"),
+	"nombre" : "María",
+	"apellido" : "Jiménez",
+	"edad" : 70,
+	"email" : "principeodentista@hotmail.com",
+	"ciudad" : "Sevilla",
+	"estudios" : "música",
+	"estado civil" : "soltera"
+}
+{
+	"_id" : ObjectId("5e4cfcd0da4af15292f3c871"),
+	"nombre" : "Javier",
+	"apellido" : "Senit",
+	"edad" : 70,
+	"email" : "javier@hotmail.com",
+	"ciudad" : "Madrid",
+	"estudios" : "informática"
+}
+{
+	"_id" : ObjectId("5e4cfe5bda4af15292f3c872"),
+	"nombre" : "María",
+	"apellido" : "Luz",
+	"edad" : 20,
+	"email" : "m.luz@hotmail.com",
+	"estudios" : "Medicina",
+	"estado civil" : "soltera"
+}
+> 
+
+---------nuevo ejercicio-----------------------
+1.
+> db.alumnos.find().count()
+9
+
+2.> db.alumnos.find({edad:{$in:[20,15]}},{nombre:1,_id:0,email:1})
+{ "nombre" : "María", "email" : "m.luz@hotmail.com" }
+> 
+
+
+
+
+3.
+> db.alumnos.find({apellido:{$lte:"L"}}).pretty()    //aqui aunque ponga menor o igual a L, a Luz no me la coge. Para ello usar el menor que M y nos aseguramos
+{
+	"_id" : ObjectId("5e4cfbcfda4af15292f3c86e"),
+	"nombre" : "Pepe",
+	"apellido" : "Jiménez",
+	"edad" : 32,
+	"email" : "pepito@hotmail.com",
+	"ciudad" : "Barcelona"
+}
+{
+	"_id" : ObjectId("5e4cfc8dda4af15292f3c870"),
+	"nombre" : "María",
+	"apellido" : "Jiménez",
+	"edad" : 70,
+	"email" : "principeodentista@hotmail.com",
+	"ciudad" : "Sevilla",
+	"estudios" : "música",
+	"estado civil" : "soltera"
+}
+> db.alumnos.find({apellido:{$lt:"M"}}).pretty()
+{
+	"_id" : ObjectId("5e4cfbcfda4af15292f3c86e"),
+	"nombre" : "Pepe",
+	"apellido" : "Jiménez",
+	"edad" : 32,
+	"email" : "pepito@hotmail.com",
+	"ciudad" : "Barcelona"
+}
+{
+	"_id" : ObjectId("5e4cfc8dda4af15292f3c870"),
+	"nombre" : "María",
+	"apellido" : "Jiménez",
+	"edad" : 70,
+	"email" : "principeodentista@hotmail.com",
+	"ciudad" : "Sevilla",
+	"estudios" : "música",
+	"estado civil" : "soltera"
+}
+{
+	"_id" : ObjectId("5e4cfe5bda4af15292f3c872"),
+	"nombre" : "María",
+	"apellido" : "Luz",
+	"edad" : 20,
+	"email" : "m.luz@hotmail.com",
+	"estudios" : "Medicina",
+	"estado civil" : "soltera"
+}
+
+4.
+> db.alumnos.find({edad:{$gte:18}})
+{ "_id" : ObjectId("5e4cfa72da4af15292f3c86a"), "nombre" : "Pepe", "apellido" : "Sánchez", "edad" : 29, "email" : "pp@soypepe.com", "ciudad" : "Madrid" }
+{ "_id" : ObjectId("5e4cfad6da4af15292f3c86b"), "nombre" : "María", "apellido" : "Pérez", "edad" : 45, "email" : "lamary@hotmail.com", "estudios" : "Peluquería", "estado civil" : "soltera" }
+{ "_id" : ObjectId("5e4cfb1ada4af15292f3c86c"), "nombre" : "María", "apellido" : "Santos", "edad" : 25, "email" : "maria_s@hotmail.com", "estudios" : "Veterinaria", "estado civil" : "soltera" }
+{ "_id" : ObjectId("5e4cfb64da4af15292f3c86d"), "nombre" : "Sonia", "apellido" : "Martos", "edad" : 33, "email" : "soniam@hotmail.com" }
+{ "_id" : ObjectId("5e4cfbcfda4af15292f3c86e"), "nombre" : "Pepe", "apellido" : "Jiménez", "edad" : 32, "email" : "pepito@hotmail.com", "ciudad" : "Barcelona" }
+{ "_id" : ObjectId("5e4cfc37da4af15292f3c86f"), "nombre" : "Lorena", "apellido" : "Torre", "edad" : 28, "email" : "lorenitavk@hotmail.com", "ciudad" : "Madrid" }
+{ "_id" : ObjectId("5e4cfc8dda4af15292f3c870"), "nombre" : "María", "apellido" : "Jiménez", "edad" : 70, "email" : "principeodentista@hotmail.com", "ciudad" : "Sevilla", "estudios" : "música", "estado civil" : "soltera" }
+{ "_id" : ObjectId("5e4cfcd0da4af15292f3c871"), "nombre" : "Javier", "apellido" : "Senit", "edad" : 70, "email" : "javier@hotmail.com", "ciudad" : "Madrid", "estudios" : "informática" }
+{ "_id" : ObjectId("5e4cfe5bda4af15292f3c872"), "nombre" : "María", "apellido" : "Luz", "edad" : 20, "email" : "m.luz@hotmail.com", "estudios" : "Medicina", "estado civil" : "soltera" }
+
+
+
+
+5.
+> db.alumnos.find({edad:{$gte:20,$lte:40}})
+{ "_id" : ObjectId("5e4cfa72da4af15292f3c86a"), "nombre" : "Pepe", "apellido" : "Sánchez", "edad" : 29, "email" : "pp@soypepe.com", "ciudad" : "Madrid" }
+{ "_id" : ObjectId("5e4cfb1ada4af15292f3c86c"), "nombre" : "María", "apellido" : "Santos", "edad" : 25, "email" : "maria_s@hotmail.com", "estudios" : "Veterinaria", "estado civil" : "soltera" }
+{ "_id" : ObjectId("5e4cfb64da4af15292f3c86d"), "nombre" : "Sonia", "apellido" : "Martos", "edad" : 33, "email" : "soniam@hotmail.com" }
+{ "_id" : ObjectId("5e4cfbcfda4af15292f3c86e"), "nombre" : "Pepe", "apellido" : "Jiménez", "edad" : 32, "email" : "pepito@hotmail.com", "ciudad" : "Barcelona" }
+{ "_id" : ObjectId("5e4cfc37da4af15292f3c86f"), "nombre" : "Lorena", "apellido" : "Torre", "edad" : 28, "email" : "lorenitavk@hotmail.com", "ciudad" : "Madrid" }
+{ "_id" : ObjectId("5e4cfe5bda4af15292f3c872"), "nombre" : "María", "apellido" : "Luz", "edad" : 20, "email" : "m.luz@hotmail.com", "estudios" : "Medicina", "estado civil" : "soltera" }
+
+6.
+
+> db.alumnos.renameCollection("Clase")
+{ "ok" : 1 }
+> show collections
+Clase
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

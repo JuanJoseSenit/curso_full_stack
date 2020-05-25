@@ -1,0 +1,373 @@
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| escuela            |
+| information_schema |
+| libreria           |
+| mysql              |
+| performance_schema |
+| prueba_clientes    |
+| sys                |
+| tienda             |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> use tienda;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE productos(
+    -> idcodigo int(4) primary key auto_increment,
+    -> nombre char(40),
+    -> precio float(6,2),
+    -> fechaAlta date);
+Query OK, 0 rows affected, 2 warnings (0.05 sec)
+
+mysql> describe productos;
++-----------+------------+------+-----+---------+----------------+
+| Field     | Type       | Null | Key | Default | Extra          |
++-----------+------------+------+-----+---------+----------------+
+| idcodigo  | int        | NO   | PRI | NULL    | auto_increment |
+| nombre    | char(40)   | YES  |     | NULL    |                |
+| precio    | float(6,2) | YES  |     | NULL    |                |
+| fechaAlta | date       | YES  |     | NULL    |                |
++-----------+------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table productos drop idcodigo;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe productos;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| nombre    | char(40)   | YES  |     | NULL    |       |
+| precio    | float(6,2) | YES  |     | NULL    |       |
+| fechaAlta | date       | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE productos ADD idcodigo int(6);
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> describe productos;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| nombre    | char(40)   | YES  |     | NULL    |       |
+| precio    | float(6,2) | YES  |     | NULL    |       |
+| fechaAlta | date       | YES  |     | NULL    |       |
+| idcodigo  | int        | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table productos add primary key idcodigo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table productos add primary key (idcodigo);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe productos;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| nombre    | char(40)   | YES  |     | NULL    |       |
+| precio    | float(6,2) | YES  |     | NULL    |       |
+| fechaAlta | date       | YES  |     | NULL    |       |
+| idcodigo  | int        | NO   | PRI | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> alter table productos modify idcodigo char(10);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe productos;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| nombre    | char(40)   | YES  |     | NULL    |       |
+| precio    | float(6,2) | YES  |     | NULL    |       |
+| fechaAlta | date       | YES  |     | NULL    |       |
+| idcodigo  | char(10)   | NO   | PRI | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("c01","cepillo abrillantar",2.50,"2017/11/02");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from productos;
++---------------------+--------+------------+----------+
+| nombre              | precio | fechaAlta  | idcodigo |
++---------------------+--------+------------+----------+
+| cepillo abrillantar |   2.50 | 2017-11-02 | c01      |
++---------------------+--------+------------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("r01","regleta mod.ZAZ",10,"2018/05/03");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("r02","regleta mod.XAX",15,"2018/05/03");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from productos;
++---------------------+--------+------------+----------+
+| nombre              | precio | fechaAlta  | idcodigo |
++---------------------+--------+------------+----------+
+| cepillo abrillantar |   2.50 | 2017-11-02 | c01      |
+| regleta mod.ZAZ     |  10.00 | 2018-05-03 | r01      |
+| regleta mod.XAX     |  15.00 | 2018-05-03 | r02      |
++---------------------+--------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> 
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("p01","pegamento rápido",6.5,"2017/11/02");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("p01","pegamento industrial",14.5,"2017/10/06");
+ERROR 1062 (23000): Duplicate entry 'p01' for key 'productos.PRIMARY'
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("p02","pegamento industrial",14.5,"2017/10/06");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("a03","azada grande 60 cm",50.6,"2018/05/03");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("c02","cepillo birutas",6.20,"2017/10/06");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("c03","cepillo jardín",22.35,"2018/05/03");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("a01","azada pequeña 30 cm",25,"2017/10/06");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productos(idcodigo,nombre,precio,fechaAlta)values("a02","azada mediana 45 cm",37.50,"2017/11/02");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from productos;
++----------------------+--------+------------+----------+
+| nombre               | precio | fechaAlta  | idcodigo |
++----------------------+--------+------------+----------+
+| azada pequeña 30 cm  |  25.00 | 2017-10-06 | a01      |
+| azada mediana 45 cm  |  37.50 | 2017-11-02 | a02      |
+| azada grande 60 cm   |  50.60 | 2018-05-03 | a03      |
+| cepillo abrillantar  |   2.50 | 2017-11-02 | c01      |
+| cepillo birutas      |   6.20 | 2017-10-06 | c02      |
+| cepillo jardín       |  22.35 | 2018-05-03 | c03      |
+| pegamento rápido     |   6.50 | 2017-11-02 | p01      |
+| pegamento industrial |  14.50 | 2017-10-06 | p02      |
+| regleta mod.ZAZ      |  10.00 | 2018-05-03 | r01      |
+| regleta mod.XAX      |  15.00 | 2018-05-03 | r02      |
++----------------------+--------+------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> describe productos;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| nombre    | char(40)   | YES  |     | NULL    |       |
+| precio    | float(6,2) | YES  |     | NULL    |       |
+| fechaAlta | date       | YES  |     | NULL    |       |
+| idcodigo  | char(10)   | NO   | PRI | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from productos where nombre="pegamento industrial";
++----------------------+--------+------------+----------+
+| nombre               | precio | fechaAlta  | idcodigo |
++----------------------+--------+------------+----------+
+| pegamento industrial |  14.50 | 2017-10-06 | p02      |
++----------------------+--------+------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from productos where nombre like "pega%";
++----------------------+--------+------------+----------+
+| nombre               | precio | fechaAlta  | idcodigo |
++----------------------+--------+------------+----------+
+| pegamento rápido     |   6.50 | 2017-11-02 | p01      |
+| pegamento industrial |  14.50 | 2017-10-06 | p02      |
++----------------------+--------+------------+----------+
+2 rows in set (0.00 sec)
+mysql> select nombre,precio from productos where precio>22;
++----------------------+--------+
+| nombre               | precio |
++----------------------+--------+
+| azada pequeña 30 cm  |  25.00 |
+| azada mediana 45 cm  |  37.50 |
+| azada grande 60 cm   |  50.60 |
+| cepillo jardín       |  22.35 |
++----------------------+--------+
+4 rows in set (0.00 sec)
+mysql> select avg(precio) as precio_medio from productos where nombre like "regleta%";
++--------------+
+| precio_medio |
++--------------+
+|    12.500000 |
++--------------+
+1 row in set (0.00 sec)
+mysql> alter table productos add categoria char(30);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe productos;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| nombre    | char(40)   | YES  |     | NULL    |       |
+| precio    | float(6,2) | YES  |     | NULL    |       |
+| fechaAlta | date       | YES  |     | NULL    |       |
+| idcodigo  | char(10)   | NO   | PRI | NULL    |       |
+| categoria | char(30)   | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> select * from productos;
++----------------------+--------+------------+----------+-----------+
+| nombre               | precio | fechaAlta  | idcodigo | categoria |
++----------------------+--------+------------+----------+-----------+
+| azada pequeña 30 cm  |  25.00 | 2017-10-06 | a01      | NULL      |
+| azada mediana 45 cm  |  37.50 | 2017-11-02 | a02      | NULL      |
+| azada grande 60 cm   |  50.60 | 2018-05-03 | a03      | NULL      |
+| cepillo abrillantar  |   2.50 | 2017-11-02 | c01      | NULL      |
+| cepillo birutas      |   6.20 | 2017-10-06 | c02      | NULL      |
+| cepillo jardín       |  22.35 | 2018-05-03 | c03      | NULL      |
+| pegamento rápido     |   6.50 | 2017-11-02 | p01      | NULL      |
+| pegamento industrial |  14.50 | 2017-10-06 | p02      | NULL      |
+| regleta mod.ZAZ      |  10.00 | 2018-05-03 | r01      | NULL      |
+| regleta mod.XAX      |  15.00 | 2018-05-03 | r02      | NULL      |
++----------------------+--------+------------+----------+-----------+
+10 rows in set (0.00 sec)
+mysql> update productos set categoria="utensilio";
+Query OK, 10 rows affected (0.03 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> select * from productos;
++----------------------+--------+------------+----------+-----------+
+| nombre               | precio | fechaAlta  | idcodigo | categoria |
++----------------------+--------+------------+----------+-----------+
+| azada pequeña 30 cm  |  25.00 | 2017-10-06 | a01      | utensilio |
+| azada mediana 45 cm  |  37.50 | 2017-11-02 | a02      | utensilio |
+| azada grande 60 cm   |  50.60 | 2018-05-03 | a03      | utensilio |
+| cepillo abrillantar  |   2.50 | 2017-11-02 | c01      | utensilio |
+| cepillo birutas      |   6.20 | 2017-10-06 | c02      | utensilio |
+| cepillo jardín       |  22.35 | 2018-05-03 | c03      | utensilio |
+| pegamento rápido     |   6.50 | 2017-11-02 | p01      | utensilio |
+| pegamento industrial |  14.50 | 2017-10-06 | p02      | utensilio |
+| regleta mod.ZAZ      |  10.00 | 2018-05-03 | r01      | utensilio |
+| regleta mod.XAX      |  15.00 | 2018-05-03 | r02      | utensilio |
++----------------------+--------+------------+----------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> update productos set categoria="enchufe" where nombre like "regleta%";
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from productos;
++----------------------+--------+------------+----------+-----------+
+| nombre               | precio | fechaAlta  | idcodigo | categoria |
++----------------------+--------+------------+----------+-----------+
+| azada pequeña 30 cm  |  25.00 | 2017-10-06 | a01      | utensilio |
+| azada mediana 45 cm  |  37.50 | 2017-11-02 | a02      | utensilio |
+| azada grande 60 cm   |  50.60 | 2018-05-03 | a03      | utensilio |
+| cepillo abrillantar  |   2.50 | 2017-11-02 | c01      | utensilio |
+| cepillo birutas      |   6.20 | 2017-10-06 | c02      | utensilio |
+| cepillo jardín       |  22.35 | 2018-05-03 | c03      | utensilio |
+| pegamento rápido     |   6.50 | 2017-11-02 | p01      | utensilio |
+| pegamento industrial |  14.50 | 2017-10-06 | p02      | utensilio |
+| regleta mod.ZAZ      |  10.00 | 2018-05-03 | r01      | enchufe   |
+| regleta mod.XAX      |  15.00 | 2018-05-03 | r02      | enchufe   |
++----------------------+--------+------------+----------+-----------+
+10 rows in set (0.00 sec)
+mysql> select categoria,count(nombre) from productos group by categoria;
++-----------+---------------+
+| categoria | count(nombre) |
++-----------+---------------+
+| utensilio |             8 |
+| enchufe   |             2 |
++-----------+---------------+
+2 rows in set (0.00 sec)
+mysql> update productos set nombre="cepillo birutas pequeño" where idcodigo="c02";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from productos;
++--------------------------+--------+------------+----------+-----------+
+| nombre                   | precio | fechaAlta  | idcodigo | categoria |
++--------------------------+--------+------------+----------+-----------+
+| azada pequeña 30 cm      |  25.00 | 2017-10-06 | a01      | utensilio |
+| azada mediana 45 cm      |  37.50 | 2017-11-02 | a02      | utensilio |
+| azada grande 60 cm       |  50.60 | 2018-05-03 | a03      | utensilio |
+| cepillo abrillantar      |   2.50 | 2017-11-02 | c01      | utensilio |
+| cepillo birutas pequeño  |   6.20 | 2017-10-06 | c02      | utensilio |
+| cepillo jardín           |  22.35 | 2018-05-03 | c03      | utensilio |
+| pegamento rápido         |   6.50 | 2017-11-02 | p01      | utensilio |
+| pegamento industrial     |  14.50 | 2017-10-06 | p02      | utensilio |
+| regleta mod.ZAZ          |  10.00 | 2018-05-03 | r01      | enchufe   |
+| regleta mod.XAX          |  15.00 | 2018-05-03 | r02      | enchufe   |
++--------------------------+--------+------------+----------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> update productos set precio=6.3 where idcodigo="c02";
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update productos set fechaAlta="2020/02/02" where idcodigo="c02";
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from productos;
++--------------------------+--------+------------+----------+-----------+
+| nombre                   | precio | fechaAlta  | idcodigo | categoria |
++--------------------------+--------+------------+----------+-----------+
+| azada pequeña 30 cm      |  25.00 | 2017-10-06 | a01      | utensilio |
+| azada mediana 45 cm      |  37.50 | 2017-11-02 | a02      | utensilio |
+| azada grande 60 cm       |  50.60 | 2018-05-03 | a03      | utensilio |
+| cepillo abrillantar      |   2.50 | 2017-11-02 | c01      | utensilio |
+| cepillo birutas pequeño  |   6.30 | 2020-02-02 | c02      | utensilio |
+| cepillo jardín           |  22.35 | 2018-05-03 | c03      | utensilio |
+| pegamento rápido         |   6.50 | 2017-11-02 | p01      | utensilio |
+| pegamento industrial     |  14.50 | 2017-10-06 | p02      | utensilio |
+| regleta mod.ZAZ          |  10.00 | 2018-05-03 | r01      | enchufe   |
+| regleta mod.XAX          |  15.00 | 2018-05-03 | r02      | enchufe   |
++--------------------------+--------+------------+----------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> alter table productos rename productosB;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> describe productosB;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| nombre    | char(40)   | YES  |     | NULL    |       |
+| precio    | float(6,2) | YES  |     | NULL    |       |
+| fechaAlta | date       | YES  |     | NULL    |       |
+| idcodigo  | char(10)   | NO   | PRI | NULL    |       |
+| categoria | char(30)   | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

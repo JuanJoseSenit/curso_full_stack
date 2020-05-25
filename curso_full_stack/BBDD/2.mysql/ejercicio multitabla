@@ -1,0 +1,70 @@
+1
+mysql> select articulos.codigo,articulos.nombre,precio,articulos.fabricante,fabricantes.nombre from articulos,fabricantes where fabricante=fabricantes.codigo;
++--------+-------------+--------+------------+-----------+
+| codigo | nombre      | precio | fabricante | nombre    |
++--------+-------------+--------+------------+-----------+
+|      1 | camisa      |     15 |         20 | ropa      |
+|      2 | pantalon    |     25 |         20 | ropa      |
+|      5 | zapatillas  |     65 |         20 | ropa      |
+|      3 | platanos    |      2 |         21 | alimentos |
+|      4 | jamon       |     85 |         21 | alimentos |
+|      9 | salchichon  |      2 |         21 | alimentos |
+|      6 | ambientador |      2 |         22 | coches    |
+|      7 | rueda       |     30 |         22 | coches    |
+|      8 | manometro   |      8 |         22 | coches    |
++--------+-------------+--------+------------+-----------+
+9 rows in set (0.00 sec)
+
+
+2
+
+
+mysql> select articulos.nombre,precio,fabricantes.nombre from articulos,fabricantes where fabricante=fabricantes.codigo;
++-------------+--------+-----------+
+| nombre      | precio | nombre    |
++-------------+--------+-----------+
+| camisa      |     15 | ropa      |
+| pantalon    |     25 | ropa      |
+| zapatillas  |     65 | ropa      |
+| platanos    |      2 | alimentos |
+| jamon       |     85 | alimentos |
+| salchichon  |      2 | alimentos |
+| ambientador |      2 | coches    |
+| rueda       |     30 | coches    |
+| manometro   |      8 | coches    |
++-------------+--------+-----------+
+9 rows in set (0.00 sec)
+
+3
+
+mysql> select avg(precio),fabricantes.codigo from articulos,fabricantes where fabricantes.codigo=articulos.fabricante group by fabricantes.codigo;
++-------------+--------+
+| avg(precio) | codigo |
++-------------+--------+
+|     35.0000 |     20 |
+|     29.6667 |     21 |
+|     13.3333 |     22 |
++-------------+--------+
+3 rows in set (0.00 sec)
+
+4
+
+
+5 misma query que la anterior añadiendo un having avg(precio)>600;   (al final)
+
+
+6
+
+select nombre,precio from articulos where precio=(select min(precio) from articulos);
+mysql> select nombre,precio from articulos where precio=(select min(precio) from articulos);
++-------------+--------+
+| nombre      | precio |
++-------------+--------+
+| platanos    |      2 |
+| ambientador |      2 |
+| salchichon  |      2 |
++-------------+--------+
+3 rows in set (0.01 sec)
+
+
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Selección de país por defecto</title>
+</head>
+<body>
+
+<h1 style="display: none"></h1>
+
+<form action="solucion.php" method="get">
+
+  <select name="pais" id="paises">
+    <option value="">escoja un pais...</option>
+    <option value="ES">España</option>
+    <option value="PL">Polonia</option>
+    <option value="CR">Cosa Rica</option>
+  </select>
+
+  <input type="submit" value="Enviar" disabled/>
+
+</form>
+
+<script>
+
+    // Leemos el contenido de la cookie "mensaje" y
+    // lo ponemos en el H1 como título
+    if (mensaje = readCookie('mensaje')) {
+        let bienvenida = document.querySelector('h1');
+        bienvenida.innerHTML = decodeURI(mensaje).replace("+", " ");
+        bienvenida.removeAttribute('style');
+    }
+
+    // Helper para activar y desactivar el boton de submit cuando
+    // seleccionamos un pais
+    document.getElementById('paises').addEventListener('change', function () {
+        const paises = document.querySelectorAll('option');
+        paises.forEach(function (pais) {
+            if (pais.selected) {
+                if (pais.value !== "") {
+                    document.querySelector("input[type='submit']")
+                        .removeAttribute('disabled')
+                } else {
+                    document.querySelector("input[type='submit']")
+                        .setAttribute('disabled', true)
+                }
+            }
+        });
+    });
+
+    // Helper para devolver el contenido de la cookie en un valor valido en javascript
+    function readCookie(name) {
+        return (name = new RegExp('(?:^|;\\s*)' + ('' + name).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '=([^;]*)').exec(document.cookie)) && name[1];
+    }
+</script>
+</body>
+</html>
